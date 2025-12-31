@@ -1,0 +1,10 @@
+# Temporary files
+*-clean.json
+test-response.txt
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
