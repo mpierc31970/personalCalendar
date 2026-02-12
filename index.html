@@ -439,7 +439,8 @@
             if (!response.ok) {
                 throw new Error('Failed to submit booking');
             }
-            return response.json();
+            const text = await response.text();
+            return text ? JSON.parse(text) : { success: true };
         }
 
         // ============================================

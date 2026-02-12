@@ -216,7 +216,7 @@ function submitBooking(data) {\n\
     method: "POST",\n\
     headers: { "Content-Type": "application/json" },\n\
     body: JSON.stringify(data)\n\
-  }).then(function (r) { if (!r.ok) throw new Error("Failed to book"); return r.json(); });\n\
+  }).then(function (r) { if (!r.ok) throw new Error("Failed to book"); return r.text(); }).then(function (t) { return t ? JSON.parse(t) : { success: true }; });\n\
 }\n\
 \n\
 function renderTimeSlots(slots) {\n\
