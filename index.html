@@ -616,8 +616,24 @@
             });
         }
 
+        // Notify parent iframe of height changes for auto-resize
+        function notifyParentHeight() {
+            if (window.parent !== window) {
+                var h = document.documentElement.scrollHeight;
+                window.parent.postMessage({ type: 'scheduler-resize', height: h }, '*');
+            }
+        }
+
         // Start the app
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', function() {
+            init();
+            // Notify height on load and on any DOM change
+            setTimeout(notifyParentHeight, 300);
+            new MutationObserver(notifyParentHeight).observe(document.body, {
+                childList: true, subtree: true, attributes: true
+            });
+            window.addEventListener('resize', notifyParentHeight);
+        });
     </script>
 </body>
 </html>
